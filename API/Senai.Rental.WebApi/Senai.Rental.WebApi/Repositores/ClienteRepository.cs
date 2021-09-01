@@ -1,0 +1,137 @@
+﻿using Senai.Rental.WebApi.Domains;
+using Senai.Rental.WebApi.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Senai.Rental.WebApi.Repositores
+{
+    public class ClienteRepository : IClienteRepository
+    {
+
+        private string StringConexao = "data source=NOTE0113G4\\SQLEXPRESS; initial Catalog=T_Rental_Israel; user Id=sa; pwd=Senai@132";
+        public void AtualizarUrl(int IdCliente, ClienteDomain ClienteAtualizado)
+        {
+            using (SqlConnection con = new SqlConnection(StringConexao))
+            {
+                string QueryUpdateUrl = "Update Cliente Set Cliente.Nome = @nomeCliente WHERE idGenero = @idCliente";
+
+                using (SqlCommand cmd = new SqlCommand(QueryUpdateUrl, con))
+                {
+                    cmd.Parameters.AddWithValue("@nomeCliente", ClienteAtualizado.Nome);
+                    cmd.Parameters.AddWithValue("@idCliente", IdCliente);
+
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public ClienteDomain BuscarPorId(int IdCliente)
+        {
+            using (SqlConnection con = new SqlConnection(StringConexao))
+            {
+                string QueryBuscar = "Select * From Cliente Where ClienteId = @IdCliente; Go";
+
+                con.Open();
+
+                SqlDataReader rdr;
+
+                using (SqlCommand cmd = new SqlCommand(QueryBuscar, con))
+                {
+                    cmd.Parameters.AddWithValue("@IdCliente", IdCliente);
+
+                    rdr = cmd.ExecuteReader();
+
+                    if (rdr.Read())
+                    {
+                        ClienteDomain ClienteBuscado = new ClienteDomain()
+                        {
+                            ClienteId = Convert.ToInt32(rdr[0]),
+                            Nome = rdr[1].ToString(),
+                            Sobrenome = rdr[2].ToString(),
+                            CNH = rdr[3].ToString()
+
+                        };
+
+                        return ClienteBuscado;
+                    }
+
+                    return null;
+                }
+            }
+        }
+
+        public void Cadastrar(ClienteDomain NovoCliente)
+        {
+            using (SqlConnection con = new  SqlConnection(StringConexao))
+            {
+                string QueryInsert = "Insert Into Cliente (Nome, Sobrenome, CNH) Values (@Nome, @Sobrenome, @CNH); Go";
+
+                con.Open();
+
+                using (SqlCommand cmd = new SqlCommand(QueryInsert, con))
+                {
+                    cmd.Parameters.AddWithValue("@Nome", NovoCliente.Nome);
+                    cmd.Parameters.AddWithValue("@Sobrenome", NovoCliente.Sobrenome);
+                    cmd.Parameters.AddWithValue("@CNH", NovoCliente.CNH);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void Deletar(int IdCliente)
+        {
+            using (SqlConnection con = new SqlConnection(StringConexao))
+            {
+                string QueryDelete = "Delete From Cliente Where ClienteId = @IdCliente; Go";
+
+                con.Open();
+
+                using (SqlCommand cmd = new SqlCommand(QueryDelete, con))
+                {
+                    cmd.Parameters.AddWithValue("@IdCliente", IdCliente);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public List<ClienteDomain> ListarTodas()
+        {
+            List<ClienteDomain> ListarGeneros = new List<ClienteDomain>();
+            using (SqlConnection con = new SqlConnection(StringConexao))
+            {
+                string QueryListar = "Select * From Cliente; Go";
+
+                con.Open();
+
+                SqlDataReader rdr;
+
+                using (SqlCommand cmd = new SqlCommand(QueryListar, con))
+                {
+                    rdr = cmd.ExecuteReader();
+
+                    while (rdr.Read())
+                    {
+
+                        ClienteDomain Cliente = new ClienteDomain()
+                        {
+
+                            ClienteId = Convert.ToInt32(rdr[0]),
+                            Nome = rdr[1].ToString(),
+                            Sobrenome = rdr[2].ToString(),
+                            CNH = rdr[3].ToString()
+
+                        };
+                        ListarGeneros.Add(Cliente);
+                    }
+                }
+            }
+            return ListarGeneros;
+        }
+    }
+}
