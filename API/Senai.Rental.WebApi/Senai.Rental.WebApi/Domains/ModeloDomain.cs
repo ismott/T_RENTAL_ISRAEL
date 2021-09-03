@@ -10,7 +10,9 @@ namespace Senai.Rental.WebApi.Domains
 
         public int ModeloId { get; set; }
 
-        public MarcaDomain MarcaId { get; set; }
+        public MarcaDomain Marca { get; set; }
+
+        public int MarcaId { get; set; }
 
         public string NomeModelo { get; set; }
     }

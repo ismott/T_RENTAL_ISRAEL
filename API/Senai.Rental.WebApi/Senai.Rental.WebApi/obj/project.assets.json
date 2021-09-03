@@ -454,19 +454,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\DEV\\.nuget\\packages\\": {}
+    "C:\\Users\\israe\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\DEV\\Desktop\\T_RENTAL_ISRAEL\\API\\Senai.Rental.WebApi\\Senai.Rental.WebApi\\Senai.Rental.WebApi.csproj",
+      "projectUniqueName": "F:\\Biblioteca do Sistema\\Israel\\Documentos\\SENAI 1\\T_RENTAL_ISRAEL\\API\\Senai.Rental.WebApi\\Senai.Rental.WebApi\\Senai.Rental.WebApi.csproj",
       "projectName": "Senai.Rental.WebApi",
-      "projectPath": "C:\\Users\\DEV\\Desktop\\T_RENTAL_ISRAEL\\API\\Senai.Rental.WebApi\\Senai.Rental.WebApi\\Senai.Rental.WebApi.csproj",
-      "packagesPath": "C:\\Users\\DEV\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\DEV\\Desktop\\T_RENTAL_ISRAEL\\API\\Senai.Rental.WebApi\\Senai.Rental.WebApi\\obj\\",
+      "projectPath": "F:\\Biblioteca do Sistema\\Israel\\Documentos\\SENAI 1\\T_RENTAL_ISRAEL\\API\\Senai.Rental.WebApi\\Senai.Rental.WebApi\\Senai.Rental.WebApi.csproj",
+      "packagesPath": "C:\\Users\\israe\\.nuget\\packages\\",
+      "outputPath": "F:\\Biblioteca do Sistema\\Israel\\Documentos\\SENAI 1\\T_RENTAL_ISRAEL\\API\\Senai.Rental.WebApi\\Senai.Rental.WebApi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\DEV\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\israe\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

@@ -11,16 +11,18 @@ namespace Senai.Rental.WebApi.Repositores
     public class ClienteRepository : IClienteRepository
     {
 
-        private string StringConexao = "data source=NOTE0113G4\\SQLEXPRESS; initial Catalog=T_Rental_Israel; user Id=sa; pwd=Senai@132";
+        private string StringConexao = "data source=HALLISONSIARA\\SQLEXPRESS; initial Catalog=T_Rental_Israel; user Id=sa; pwd=senai@132";
         public void AtualizarUrl(int IdCliente, ClienteDomain ClienteAtualizado)
         {
             using (SqlConnection con = new SqlConnection(StringConexao))
             {
-                string QueryUpdateUrl = "Update Cliente Set Cliente.Nome = @nomeCliente WHERE idGenero = @idCliente";
+                string QueryUpdateUrl = "Update Cliente Set Cliente.Nome = @nomeCliente, Cliente.Sobrenome = @SomebrenomeCliente, CNH = @CNH WHERE ClienteId = @idCliente";
 
                 using (SqlCommand cmd = new SqlCommand(QueryUpdateUrl, con))
                 {
                     cmd.Parameters.AddWithValue("@nomeCliente", ClienteAtualizado.Nome);
+                    cmd.Parameters.AddWithValue("@SomebrenomeCliente", ClienteAtualizado.Sobrenome);
+                    cmd.Parameters.AddWithValue("@CNH", ClienteAtualizado.CNH);
                     cmd.Parameters.AddWithValue("@idCliente", IdCliente);
 
                     con.Open();
@@ -33,7 +35,7 @@ namespace Senai.Rental.WebApi.Repositores
         {
             using (SqlConnection con = new SqlConnection(StringConexao))
             {
-                string QueryBuscar = "Select * From Cliente Where ClienteId = @IdCliente; Go";
+                string QueryBuscar = "Select * From Cliente Where ClienteId = @IdCliente";
 
                 con.Open();
 
@@ -68,7 +70,7 @@ namespace Senai.Rental.WebApi.Repositores
         {
             using (SqlConnection con = new  SqlConnection(StringConexao))
             {
-                string QueryInsert = "Insert Into Cliente (Nome, Sobrenome, CNH) Values (@Nome, @Sobrenome, @CNH); Go";
+                string QueryInsert = "Insert Into Cliente (Nome, Sobrenome, CNH) Values (@Nome, @Sobrenome, @CNH)";
 
                 con.Open();
 
@@ -87,7 +89,7 @@ namespace Senai.Rental.WebApi.Repositores
         {
             using (SqlConnection con = new SqlConnection(StringConexao))
             {
-                string QueryDelete = "Delete From Cliente Where ClienteId = @IdCliente; Go";
+                string QueryDelete = "Delete From Cliente Where ClienteId = @IdCliente";
 
                 con.Open();
 
@@ -102,10 +104,10 @@ namespace Senai.Rental.WebApi.Repositores
 
         public List<ClienteDomain> ListarTodas()
         {
-            List<ClienteDomain> ListarGeneros = new List<ClienteDomain>();
+            List<ClienteDomain> ListarClientes = new List<ClienteDomain>();
             using (SqlConnection con = new SqlConnection(StringConexao))
             {
-                string QueryListar = "Select * From Cliente; Go";
+                string QueryListar = "Select ClienteId, Nome, Sobrenome, CNH From Cliente";
 
                 con.Open();
 
@@ -127,11 +129,11 @@ namespace Senai.Rental.WebApi.Repositores
                             CNH = rdr[3].ToString()
 
                         };
-                        ListarGeneros.Add(Cliente);
+                        ListarClientes.Add(Cliente);
                     }
                 }
             }
-            return ListarGeneros;
+            return ListarClientes;
         }
     }
 }
